@@ -12,7 +12,7 @@ def producer(queue, event):
         logging.info("Producer got message: %s", message)
         queue.put(message)
 
-    logging.info("Producer received event. Exiting")
+    logging.info("Producer received event. Exiting ")
 
 def consumer(queue, event):
     """Pretend we're saving a number in the database."""
