@@ -3,6 +3,11 @@ import random
 import Car
 import time
 
+# TO DO:
+# zasoby pitstopu: ilość opon i paliwa
+# losowość zużycia opon i paliwa (minimalna)
+# tankowanie i wymienianie opon 
+
 if __name__ == "__main__":
     random.seed(10)
 

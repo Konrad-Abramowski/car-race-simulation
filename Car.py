@@ -33,10 +33,11 @@ class Car(thr.Thread):
             self.__flag.wait()
             if (self.loop_progress == 0 and (self.fuel < 25 or self.tires < 25)):
                 print("pitstop")
+                time.sleep(3)
             self.fuel = self.fuel - 1
             self.tires = self.tires - 1
             set_loop_progress(self, 2.5) # tak o po prostu
-            time.sleep(1)
+            time.sleep(0.5)
 
     def pause(self):
         self.__flag.clear()
