@@ -11,10 +11,10 @@ if __name__ == "__main__":
     number_of_cars = 2
     fuel = 100
     tires = 200
-    race_progress = 0
+    loop_progress = 0
     active_status = 'Startuje'
 
-    Cars = [Car.Car(Names[i], fuel, tires, race_progress, active_status) \
+    Cars = [Car.Car(Names[i], fuel, tires, loop_progress, active_status) \
             for i in range(number_of_cars)]
 
     Car.running = True
@@ -31,4 +31,5 @@ if __name__ == "__main__":
             print(car.active_status + ": " + car.name)
             print("Fuel:", car.fuel)
             print("Tires:", car.tires)
+            print("Loop progress:", car.loop_progress)
         time.sleep(0.1)
