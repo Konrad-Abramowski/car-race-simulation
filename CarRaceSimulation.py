@@ -23,7 +23,7 @@ if __name__ == "__main__":
 
     # for Windows change set 'cls'
     # for Linux change set 'clear'
-    clear = lambda: os.system('clear')
+    clear = lambda: os.system('cls')
 
     while True:
         clear()
