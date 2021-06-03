@@ -1,3 +1,4 @@
+import threading
 import threading as thr
 import random
 import time
@@ -17,6 +18,10 @@ class Car(thr.Thread):
  
     def __init__(self, name, fuel, tires, race_progress, active_status):
         thr.Thread.__init__(self)
+        self.__flag = thr.Event()
+        self.__flag.set()
+        self.__running = threading.Event()
+        self.__running.set()
         self.name = name
         self.fuel = fuel
         self.tires = tires
@@ -24,36 +29,14 @@ class Car(thr.Thread):
         self.active_status = active_status
 
     def run(self):
-        while(self.fuel>0):
-            self.status()
-            self.fuel -= self.fuel
-            self.tires -= self.tires
-            time.sleep(1)
+        while self.__running.isSet():
+            self.__flag.wait()
+            self.fuel = self.fuel - 1
+            self.tires = self.tires - 1
+            time.sleep(0.1)
 
-    def status(self):
-        print (self.active_status, self.fuel)
+    def pause(self):
+        self.__flag.clear()
 
-def CarRaceSimulation():
-
-    random.seed(10)
-
-    # Ustawienia początkowe:
-    Names = ('BMW','AUDI','VW','SKODA','FERRARI')
-    number_of_cars = 2
-    fuel = 100
-    tires = 200
-    race_progress = 0
-    active_status = 'Startuje'
-
-    Cars = [Car(Names[i], fuel, tires, race_progress, active_status) \
-            for i in range(number_of_cars)]
-
-    Car.running = True
-    for car in Cars: 
-        car.start()
-
-    for car in Cars: 
-        car.join()
-
-
-CarRaceSimulation()
+    def resume(self):
+        self.__flag.set()
