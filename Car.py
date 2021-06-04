@@ -27,6 +27,10 @@ class Car(thr.Thread):
         self.tires = tires
         self.loop_progress = loop_progress
         self.active_status = active_status
+
+    def set_loop_progress(self, speed):
+        if self.loop_progress + speed >= 100: self.loop_progress = self.loop_progress - 100 + speed
+        else: self.loop_progress = self.loop_progress + speed
         
     def run(self):
         while self.__running.isSet():
@@ -36,7 +40,7 @@ class Car(thr.Thread):
                 time.sleep(3)
             self.fuel = self.fuel - 1
             self.tires = self.tires - 1
-            set_loop_progress(self, 2.5) # tak o po prostu
+            self.set_loop_progress(2.5)
             time.sleep(0.5)
 
     def pause(self):
@@ -44,10 +48,3 @@ class Car(thr.Thread):
 
     def resume(self):
         self.__flag.set()
-
-#trzeba było wywalic to poza klase i inaczej wywołać ;* xoxox
-# ta metoda do naprawy
-# self.loop_progress = self.loop_progress + 2.5 działa
-def set_loop_progress(self, speed):
-    if self.loop_progress + speed >= 100: self.loop_progress = self.loop_progress - 100 + speed
-    else: self.loop_progress = self.loop_progress + speed
