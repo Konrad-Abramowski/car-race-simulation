@@ -18,8 +18,8 @@ if __name__ == "__main__":
     Names = ('BMW', 'AUDI', 'VW', 'SKODA', 'FERRARI')
     fuel = 100
     tires = 100
-    pit_fuel = 10000
-    pit_tires = 10000
+    pit_fuel = 100000
+    pit_tires = 100000
     loop_progress = 0
     active_status = 'Startuje'
 
