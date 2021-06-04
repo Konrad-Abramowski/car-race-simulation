@@ -1,17 +1,15 @@
 import threading as thr
+import Car
+import time
 
 class PitStop(thr.Thread):
 
-    running = True
-
-    def __init__(self, pit_fuel, pit_tires):
+    def __init__(self, fuel, tires):
         thr.Thread.__init__(self)
         self.__flag = thr.Event()
         self.__flag.set()
         self.__running = thr.Event()
         self.__running.set()
-        self.pit_fuel = pit_fuel
-        self.pit_tires = pit_tires
+        self.fuel = fuel
+        self.tires = tires
 
-    def run(self):
-        print("Pitstop running")
