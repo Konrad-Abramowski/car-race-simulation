@@ -4,7 +4,7 @@ import time
 
 class PitStop(thr.Thread):
 
-    def __init__(self, fuel, tires):
+    def __init__(self, fuel, tires, status):
         thr.Thread.__init__(self)
         self.__flag = thr.Event()
         self.__flag.set()
@@ -12,4 +12,4 @@ class PitStop(thr.Thread):
         self.__running.set()
         self.fuel = fuel
         self.tires = tires
-
+        self.status = status

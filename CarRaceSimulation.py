@@ -6,9 +6,7 @@ import time
 
 # TO DO:
 
-pit_fuel = 10000
-pit_tires = 10000
-pit_stop = PitStop(pit_fuel,pit_tires)
+
 
 # tankowanie i wymienianie opon 
 
@@ -20,10 +18,12 @@ if __name__ == "__main__":
     Names = ('BMW', 'AUDI', 'VW', 'SKODA', 'FERRARI')
     fuel = 100
     tires = 100
-  
+    pit_fuel = 10000
+    pit_tires = 10000
     loop_progress = 0
     active_status = 'Startuje'
 
+    pit_stop = PitStop(pit_fuel,pit_tires, "not busy")
     pit_stop.start()
 
     Cars = [Car.Car(Names[i], fuel, tires, loop_progress, active_status, round(random.uniform(1.5, 3.5), 2), pit_stop) \
@@ -43,7 +43,6 @@ if __name__ == "__main__":
             os.system('cls')
     
     time.sleep(3)
-
     while True:
         clear()
 
@@ -58,7 +57,7 @@ if __name__ == "__main__":
         print("PitStop")
         print("Fuel: {:.2f}".format(pit_stop.fuel))
         print("Tires: {:.2f}".format(pit_stop.tires))
-        print("PitStop status busy or not")
+        print("PitStop status: " + pit_stop.status)
         print("\n")
 
         time.sleep(0.1)

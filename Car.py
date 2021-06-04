@@ -54,10 +54,11 @@ class Car(thr.Thread):
     def resume(self):
         self.__flag.set()
 
-    def use_pit_stop(self, pit_stop, duration):
+    def use_pit_stop(self, pit_stop):
         #  TODO 
         # lock PitStop thread (lock, acquire)
-
+        # threading.Lock(pit_stop).acquire
+        
         self.pause()  
         time.sleep(0.1)
         pit_stop.fuel = pit_stop.fuel - (100 - self.fuel)
