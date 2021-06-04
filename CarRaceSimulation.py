@@ -1,3 +1,4 @@
+from PitStop import PitStop
 import os
 import random
 import Car
@@ -26,9 +27,19 @@ if __name__ == "__main__":
     for car in Cars:
         car.start()
 
+    pit_stop = PitStop(10000,10000)
+    pit_stop.start()
+
     # for Windows change set 'cls'
     # for Linux change set 'clear'
-    clear = lambda: os.system('cls')
+    def clear():
+        if os.name == 'posix':
+            os.system('clear')
+        elif(os.name == 'nt'):
+            os.system('cls')
+    
+    
+
 
     while True:
         clear()
