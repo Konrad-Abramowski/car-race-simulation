@@ -16,7 +16,7 @@ class Car(thr.Thread):
  
     running = True
  
-    def __init__(self, name, fuel, tires, loop_progress, active_status):
+    def __init__(self, name, fuel, tires, loop_progress, active_status, car_speed):
         thr.Thread.__init__(self)
         self.__flag = thr.Event()
         self.__flag.set()
@@ -27,20 +27,23 @@ class Car(thr.Thread):
         self.tires = tires
         self.loop_progress = loop_progress
         self.active_status = active_status
+        self.car_speed = car_speed
 
-    def set_loop_progress(self, speed):
-        if self.loop_progress + speed >= 100: self.loop_progress = self.loop_progress - 100 + speed
-        else: self.loop_progress = self.loop_progress + speed
+    def set_loop_progress(self, car_speed):
+        if self.loop_progress + car_speed >= 100: self.loop_progress = self.loop_progress - 100 + car_speed
+        else: self.loop_progress = self.loop_progress + car_speed
         
     def run(self):
         while self.__running.isSet():
             self.__flag.wait()
+            fuel_wear = round(random.uniform(0.5, 1.5), 2)
+            tires_wear = round(random.uniform(1, 2.5), 2)
             if (self.loop_progress == 0 and (self.fuel < 25 or self.tires < 25)):
                 print("pitstop")
                 time.sleep(3)
-            self.fuel = self.fuel - 1
-            self.tires = self.tires - 1
-            self.set_loop_progress(2.5)
+            self.fuel = self.fuel - fuel_wear
+            self.tires = self.tires - tires_wear
+            self.set_loop_progress(self.car_speed)
             time.sleep(0.5)
 
     def pause(self):
