@@ -32,10 +32,6 @@ if __name__ == "__main__":
     for car in Cars:
         car.start()
 
-
-
-    # for Windows change set 'cls'
-    # for Linux change set 'clear'
     def clear():
         if os.name == 'posix':
             os.system('clear')
@@ -60,7 +56,7 @@ if __name__ == "__main__":
         print("PitStop status: " + pit_stop.status)
         print("\n")
 
-        time.sleep(0.1)
+        time.sleep(0.5)
 
 
     

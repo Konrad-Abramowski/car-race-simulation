@@ -39,14 +39,12 @@ class Car(thr.Thread):
             self.__flag.wait()
             fuel_wear = round(random.uniform(0.5, 1.5), 2)
             tires_wear = round(random.uniform(1, 2.5), 2)
-            # TODO
-            # 
-            if (self.loop_progress < 10 and (self.fuel < 25 or self.tires < 25)):
+            if (self.loop_progress < 10 and ( 100/self.car_speed > self.fuel/1.5 or 100/self.car_speed > self.tires/2.5)): #1.5 i 2.5 to maks zużycia opon lub paliwa; możemy dać takie ryzyko, że zamiast maks zużycia dać średnią, wtedy bedzie 50% szans, że dojedzie 
                 self.use_pit_stop(self.pit_stop)
             self.fuel = self.fuel - fuel_wear
             self.tires = self.tires - tires_wear
             self.set_loop_progress(self.car_speed)
-            time.sleep(0.2)
+            time.sleep(0.5)
 
     def pause(self):
         self.__flag.clear()
