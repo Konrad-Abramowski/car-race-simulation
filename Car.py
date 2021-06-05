@@ -10,7 +10,6 @@ import time
 # tires = 100         #od 0 do 100, 100 oznacza nowe opony
 # race_progress = 0   #od 0 do 100, 0 oznacza poczatek wyscigu
 
-lock = thr.Lock()
 
 class Car(thr.Thread):
  
@@ -59,14 +58,18 @@ class Car(thr.Thread):
         #  TODO 
         # lock PitStop thread (lock, acquire)
         # threading.Lock(pit_stop).acquire
-        
+
         self.pause()  
-        time.sleep(0.1)
+        self.pit_stop.status = "occupied by: " + self.name
+
+        time.sleep(3)
         pit_stop.fuel = pit_stop.fuel - (100 - self.fuel)
         self.fuel = 100
         pit_stop.tires = pit_stop.tires - (100 - self.tires)
         self.tires = 100
-        self.resume()
 
+        self.pit_stop.status = "not occupied" 
+        self.resume()
+        
         #  TODO 
         # release PitStop
