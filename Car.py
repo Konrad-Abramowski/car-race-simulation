@@ -16,7 +16,7 @@ class Car(thr.Thread):
  
     running = True
  
-    def __init__(self, name, fuel, tires, loop_progress, active_status, car_speed, pit_stop):
+    def __init__(self, name, fuel, tires, loop_progress, active_status, car_speed, pit_stop, loop_counter):
         thr.Thread.__init__(self)
         self.__flag = thr.Event()
         self.__flag.set()
@@ -29,9 +29,12 @@ class Car(thr.Thread):
         self.active_status = active_status
         self.car_speed = car_speed
         self.pit_stop = pit_stop
+        self.loop_counter = loop_counter
 
     def set_loop_progress(self, car_speed):
-        if self.loop_progress + car_speed >= 100: self.loop_progress = self.loop_progress - 100 + car_speed
+        if self.loop_progress + car_speed >= 100: 
+            self.loop_progress = self.loop_progress - 100 + car_speed
+            self.loop_counter += 1
         else: self.loop_progress = self.loop_progress + car_speed
         
     def run(self):

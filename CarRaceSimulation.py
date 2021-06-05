@@ -26,7 +26,7 @@ if __name__ == "__main__":
     pit_stop = PitStop(pit_fuel,pit_tires, "not busy")
     pit_stop.start()
 
-    Cars = [Car.Car(Names[i], fuel, tires, loop_progress, active_status, round(random.uniform(1.5, 3.5), 2), pit_stop) \
+    Cars = [Car.Car(Names[i], fuel, tires, loop_progress, active_status, round(random.uniform(1.5, 3.5), 2), pit_stop, 0) \
             for i in range(number_of_cars)]
 
     for car in Cars:
@@ -46,8 +46,9 @@ if __name__ == "__main__":
             print(car.active_status + ": " + car.name)
             print("Fuel: {:.2f}".format(car.fuel))
             print("Tires: {:.2f}".format(car.tires))
+            print("Speed: {:.2f}".format(car.car_speed))
             print("Loop progress: {:.2f}".format(car.loop_progress))
-            print("Car speed: {:.2f}".format(car.car_speed))
+            print("Loops finished: {}".format(car.loop_counter))
             print("\n")
 
         print("PitStop")
