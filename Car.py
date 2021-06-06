@@ -10,7 +10,6 @@ import time
 # tires = 100         #od 0 do 100, 100 oznacza nowe opony
 # race_progress = 0   #od 0 do 100, 0 oznacza poczatek wyscigu
 
-lock = thr.Lock()
 
 
 
@@ -18,7 +17,7 @@ class Car(thr.Thread):
 
     running = True
  
-    def __init__(self, name, fuel, tires, loop_progress, active_status, car_speed, pit_stop, race_progress, place):
+    def __init__(self, name, fuel, tires, loop_progress, active_status, car_speed, pit_stop, loop_counter):
         thr.Thread.__init__(self)
         self.__flag = thr.Event()
         self.__flag.set()
@@ -31,22 +30,17 @@ class Car(thr.Thread):
         self.active_status = active_status
         self.car_speed = car_speed
         self.pit_stop = pit_stop
-        self.race_progress = race_progress
-        self.place = place
+        self.loop_counter = loop_counter
 
     def set_loop_progress(self, car_speed):
-        if self.loop_progress + car_speed >= 100: self.loop_progress = self.loop_progress - 100 + car_speed
+        if self.loop_progress + car_speed >= 100: 
+            self.loop_progress = self.loop_progress - 100 + car_speed
+            self.loop_counter += 1
         else: self.loop_progress = self.loop_progress + car_speed
 
     def set_race_progress(self, car_speed):
         if self.loop_progress + car_speed >= 100: self.race_progress = self.race_progress + 1
 
-    def set_place(self, race_progress, place):
-        if  self.race_progress >= loops:
-                self.place = first_place
-                print(self.name + ": Miejsce ", self.place)
-                first_place = first_place + 1
-                self.__flag.clear() # albo tutaj nie wiem
         
     def run(self):
         while self.__running.isSet():
@@ -71,14 +65,18 @@ class Car(thr.Thread):
         #  TODO 
         # lock PitStop thread (lock, acquire)
         # threading.Lock(pit_stop).acquire
-        
+
         self.pause()  
-        time.sleep(0.1)
+        self.pit_stop.status = "occupied by: " + self.name
+
+        time.sleep(3)
         pit_stop.fuel = pit_stop.fuel - (100 - self.fuel)
         self.fuel = 100
         pit_stop.tires = pit_stop.tires - (100 - self.tires)
         self.tires = 100
-        self.resume()
 
+        self.pit_stop.status = "not occupied" 
+        self.resume()
+        
         #  TODO 
         # release PitStop
