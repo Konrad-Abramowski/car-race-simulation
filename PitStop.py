@@ -1,6 +1,4 @@
 import threading as thr
-import Car
-import time
 
 class PitStop(thr.Thread):
 
@@ -10,6 +8,13 @@ class PitStop(thr.Thread):
         self.__flag.set()
         self.__running = thr.Event()
         self.__running.set()
+        self.lock = thr.Lock()
         self.fuel = fuel
         self.tires = tires
         self.status = status
+
+    def pit_stop_block(self):
+        self.lock.acquire()
+
+    def pit_stop_unblock(self):
+        self.lock.release()

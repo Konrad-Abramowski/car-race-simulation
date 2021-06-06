@@ -1,4 +1,3 @@
-import threading
 import threading as thr
 import random
 import time
@@ -10,9 +9,6 @@ import time
 # tires = 100         #od 0 do 100, 100 oznacza nowe opony
 # race_progress = 0   #od 0 do 100, 0 oznacza poczatek wyscigu
 
-
-
-
 class Car(thr.Thread):
 
     running = True
@@ -21,8 +17,9 @@ class Car(thr.Thread):
         thr.Thread.__init__(self)
         self.__flag = thr.Event()
         self.__flag.set()
-        self.__running = threading.Event()
+        self.__running = thr.Event()
         self.__running.set()
+        self.lock = thr.Lock()
         self.name = name
         self.fuel = fuel
         self.tires = tires
@@ -37,46 +34,40 @@ class Car(thr.Thread):
             self.loop_progress = self.loop_progress - 100 + car_speed
             self.loop_counter += 1
         else: self.loop_progress = self.loop_progress + car_speed
-
-    def set_race_progress(self, car_speed):
-        if self.loop_progress + car_speed >= 100: self.race_progress = self.race_progress + 1
-
         
     def run(self):
         while self.__running.isSet():
             self.__flag.wait()
-            fuel_wear = round(random.uniform(0.5, 1.5), 2)
-            tires_wear = round(random.uniform(1, 2.5), 2)
-            if (self.loop_progress < 10 and (100/self.car_speed > self.fuel/1.5 or 100/self.car_speed > self.tires/2.5)): #1.5 i 2.5 to maks zużycia opon lub paliwa; możemy dać takie ryzyko, że zamiast maks zużycia dać średnią, wtedy bedzie 50% szans, że dojedzie 
+            fuel_wear = round(random.uniform(0.5, 1.0), 2)
+            tires_wear = round(random.uniform(1, 1.5), 2)
+            if (self.loop_progress < 10 and (100/self.car_speed > self.fuel/1.0 or 100/self.car_speed > self.tires/1.5)): #1.5 i 2.5 to maks zużycia opon lub paliwa; możemy dać takie ryzyko, że zamiast maks zużycia dać średnią, wtedy bedzie 50% szans, że dojedzie 
                 self.use_pit_stop(self.pit_stop)
             self.fuel = self.fuel - fuel_wear
             self.tires = self.tires - tires_wear
-            self.set_race_progress(self.car_speed)
             self.set_loop_progress(self.car_speed)
             time.sleep(0.2)
 
-    def pause(self):
-        self.__flag.clear()
+    # def pause(self):
+    #     self.__flag.clear()
 
-    def resume(self):
-        self.__flag.set()
+    # def resume(self):
+    #     self.__flag.set()
 
-    def use_pit_stop(self, pit_stop):
-        #  TODO 
-        # lock PitStop thread (lock, acquire)
-        # threading.Lock(pit_stop).acquire
+    def use_pit_stop(self, pit_stop): 
 
-        self.pause()  
+        self.lock.acquire()
+        pit_stop.pit_stop_block()
+
         self.pit_stop.status = "occupied by: " + self.name
 
-        time.sleep(3)
+        time.sleep(5)
         pit_stop.fuel = pit_stop.fuel - (100 - self.fuel)
         self.fuel = 100
         pit_stop.tires = pit_stop.tires - (100 - self.tires)
         self.tires = 100
 
         self.pit_stop.status = "not occupied" 
-        self.resume()
-        
-        #  TODO 
-        # release PitStop
+
+        pit_stop.pit_stop_unblock()
+        self.lock.release()
+

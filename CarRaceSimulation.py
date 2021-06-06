@@ -4,12 +4,6 @@ import random
 import Car
 import time
 
-# TO DO:
-
-
-
-# tankowanie i wymienianie opon 
-
 if __name__ == "__main__":
     random.seed(10)
 
@@ -27,7 +21,7 @@ if __name__ == "__main__":
     active_status = 'Startuje'
 
 
-    pit_stop = PitStop(pit_fuel,pit_tires, "not busy")
+    pit_stop = PitStop(pit_fuel, pit_tires, "not busy")
     pit_stop.start()
 
     Cars = [Car.Car(Names[i], fuel, tires, loop_progress, active_status, round(random.uniform(1.5, 3.5), 2), pit_stop, 0) \
@@ -63,5 +57,3 @@ if __name__ == "__main__":
 
         time.sleep(0.2)
 
-
-    
