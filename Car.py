@@ -33,7 +33,7 @@ class Car(thr.Thread):
         if self.loop_progress + car_speed >= 100: 
             self.loop_progress = self.loop_progress - 100 + car_speed
             self.loop_counter += 1
-            self.car_speed = round(random.uniform(1.5, 3.5), 2)     # nadanie nowej predkosci dla okrazenia
+            self.car_speed = round(random.uniform(2, 3), 2)     # nadanie nowej predkosci dla okrazenia
         else: self.loop_progress = self.loop_progress + car_speed
         
     def run(self):

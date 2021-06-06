@@ -26,7 +26,7 @@ if __name__ == "__main__":
     pit_stop = PitStop(pit_fuel, pit_tires, "not busy")
     pit_stop.start()
 
-    Cars = [Car.Car(Names[i], fuel, tires, loop_progress, active_status, round(random.uniform(1.5, 3.5), 2), pit_stop, 0) \
+    Cars = [Car.Car(Names[i], fuel, tires, loop_progress, active_status, round(random.uniform(2, 3), 2), pit_stop, 0) \
             for i in range(number_of_cars)]
 
     for car in Cars:
@@ -58,11 +58,11 @@ if __name__ == "__main__":
 
         time.sleep(0.2)
 
-    winner = Cars[0].loop_counter + Cars[0].loop_progress 
+    winner = Cars[0].loop_counter * 100 + Cars[0].loop_progress 
 
     for car in Cars:
-        if car.loop_counter + car.loop_progress >= winner:
-            winner = car.loop_counter + car.loop_progress
+        if car.loop_counter * 100 + car.loop_progress >= winner:
+            winner = car.loop_counter * 100 + car.loop_progress
             winner_name = car.name
 
     print("The winner is: " + winner_name)
