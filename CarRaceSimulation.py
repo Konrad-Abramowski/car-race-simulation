@@ -8,8 +8,8 @@ if __name__ == "__main__":
     random.seed(10)
 
     # Ustawienia początkowe:
-    number_of_cars = 2
-    Names = ('BMW', 'AUDI', 'VW', 'SKODA', 'FERRARI')
+    number_of_cars = 10
+    Names = ('BMW1', 'AUDI', 'VW1', 'FIAT1', 'BMW2', 'AUDI2', 'FORD2', 'VW2', 'FORD1', 'FIAT2')
     fuel = 100
     tires = 100
     pit_fuel = 100000
@@ -41,14 +41,14 @@ if __name__ == "__main__":
         clear()
 
         for car in Cars:
-            print(car.active_status + ": " + car.name)
-            print("Fuel: {:.2f}".format(car.fuel))
-            print("Tires: {:.2f}".format(car.tires))
-            print("Speed: {:.2f}".format(car.car_speed))
-            print("Loop progress: {:.2f}".format(car.loop_progress))
-            print("Loops finished: {}".format(car.loop_counter))
-            print("\n")
+            print(car.active_status + ": " + car.name + "\t" + "Fuel: {:.2f}".format(car.fuel) + "\t" + "Tires: {:.2f}".format(car.tires) + "\t" + "Speed: {:.2f}".format(car.car_speed) + "\t" + "Loop progress: {:.2f}".format(car.loop_progress) + "\t" + "Loops finished: {}".format(car.loop_counter))
+            # print("Fuel: {:.2f}".format(car.fuel))
+            # print("Tires: {:.2f}".format(car.tires))
+            # print("Speed: {:.2f}".format(car.car_speed))
+            # print("Loop progress: {:.2f}".format(car.loop_progress))
+            # print("Loops finished: {}".format(car.loop_counter))
 
+        print("\n")
         print("PitStop")
         print("Fuel: {:.2f}".format(pit_stop.fuel))
         print("Tires: {:.2f}".format(pit_stop.tires))
